@@ -38,7 +38,7 @@ func NewAutentificationServiceClient(cc grpc.ClientConnInterface) Autentificatio
 
 func (c *autentificationServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
 	out := new(LoginResponse)
-	err := c.cc.Invoke(ctx, "/autentification_service.AutentificationService/Login", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/autentification.AutentificationService/Login", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (c *autentificationServiceClient) Login(ctx context.Context, in *LoginReque
 
 func (c *autentificationServiceClient) Registration(ctx context.Context, in *RegistrationRequest, opts ...grpc.CallOption) (*RegistrationResponse, error) {
 	out := new(RegistrationResponse)
-	err := c.cc.Invoke(ctx, "/autentification_service.AutentificationService/Registration", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/autentification.AutentificationService/Registration", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func (c *autentificationServiceClient) Registration(ctx context.Context, in *Reg
 
 func (c *autentificationServiceClient) ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error) {
 	out := new(ChangePasswordResponse)
-	err := c.cc.Invoke(ctx, "/autentification_service.AutentificationService/ChangePassword", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/autentification.AutentificationService/ChangePassword", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (c *autentificationServiceClient) ChangePassword(ctx context.Context, in *C
 
 func (c *autentificationServiceClient) ChangeEmail(ctx context.Context, in *ChangeEmailRequest, opts ...grpc.CallOption) (*ChangeEmailResponse, error) {
 	out := new(ChangeEmailResponse)
-	err := c.cc.Invoke(ctx, "/autentification_service.AutentificationService/ChangeEmail", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/autentification.AutentificationService/ChangeEmail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ func _AutentificationService_Login_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/autentification_service.AutentificationService/Login",
+		FullMethod: "/autentification.AutentificationService/Login",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AutentificationServiceServer).Login(ctx, req.(*LoginRequest))
@@ -141,7 +141,7 @@ func _AutentificationService_Registration_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/autentification_service.AutentificationService/Registration",
+		FullMethod: "/autentification.AutentificationService/Registration",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AutentificationServiceServer).Registration(ctx, req.(*RegistrationRequest))
@@ -159,7 +159,7 @@ func _AutentificationService_ChangePassword_Handler(srv interface{}, ctx context
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/autentification_service.AutentificationService/ChangePassword",
+		FullMethod: "/autentification.AutentificationService/ChangePassword",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AutentificationServiceServer).ChangePassword(ctx, req.(*ChangePasswordRequest))
@@ -177,7 +177,7 @@ func _AutentificationService_ChangeEmail_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/autentification_service.AutentificationService/ChangeEmail",
+		FullMethod: "/autentification.AutentificationService/ChangeEmail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AutentificationServiceServer).ChangeEmail(ctx, req.(*ChangeEmailRequest))
@@ -189,7 +189,7 @@ func _AutentificationService_ChangeEmail_Handler(srv interface{}, ctx context.Co
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AutentificationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "autentification_service.AutentificationService",
+	ServiceName: "autentification.AutentificationService",
 	HandlerType: (*AutentificationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

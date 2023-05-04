@@ -9,6 +9,13 @@ import "google/api/annotations.proto";
 service UserService {
   rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
 
+  rpc Print (PrintRequest) returns (PrintResponse) {
+    option (google.api.http) = {
+			post: "/user/print"
+      body: "*"
+		};
+  }
+
   rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {
     option (google.api.http) = {
 			put: "/user/update-user"
@@ -20,6 +27,14 @@ service UserService {
 			put: "/user/change-password"
 		};
   }
+}
+
+message PrintRequest{
+  string message = 1;
+}
+
+message PrintResponse{
+  string message = 1;
 }
 
 message CreateUserRequest {
