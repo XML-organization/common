@@ -7,7 +7,12 @@ option go_package = "common/proto/user";
 import "google/api/annotations.proto";
 
 service UserService {
-  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+			post: "/user/create"
+      body: "*"
+		};
+  }
 
   rpc Print (PrintRequest) returns (PrintResponse) {
     option (google.api.http) = {
@@ -18,13 +23,15 @@ service UserService {
 
   rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {
     option (google.api.http) = {
-			put: "/user/update-user"
+			put: "/user/update"
+      body: "*"
 		};
   }
   
   rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse) {
     option (google.api.http) = {
-			put: "/user/change-password"
+			put: "/user/change"
+      body: "*"
 		};
   }
 }
@@ -40,11 +47,14 @@ message PrintResponse{
 message CreateUserRequest {
   string id = 1;
   string email = 2;
-  bytes password = 3;
+  string password = 3;
   Role role = 4;
   string name = 5;
   string surname = 6;
-  Address address = 7;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;
 }
 
 message CreateUserResponse {
@@ -58,7 +68,10 @@ message UpdateUserRequest {
   Role role = 4;
   string name = 5;
   string surname = 6;
-  Address address = 7;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;
 }
 
 message UpdateUserResponse {
