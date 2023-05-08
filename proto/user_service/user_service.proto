@@ -79,7 +79,7 @@ message UpdateUserResponse {
 }
 
 message ChangePasswordRequest {
-  string id = 1;
+  string email = 1;
   string new_password = 2;
   string old_password = 3;
 }
