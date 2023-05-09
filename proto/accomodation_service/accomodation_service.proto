@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option go_package = "github.com/XML-organization/common/proto/accomodation";
+
+package accomodation;
+
+import "google/api/annotations.proto";
+
+service AccomodationService {
+
+rpc Create(CreateRequest) returns(CreateResponse) {
+    option (google.api.http) = {
+      post: "/accomodation/create"
+      body: "*"
+    };
+}
+}
+message CreateRequest {
+    string ID = 1;          
+	string Name      = 2;    
+	string Location   = 3; 
+	bool Wifi       = 4; 
+	bool Kitchen     = 5; 
+	bool AirCondition = 6; 
+	bool FreeParking  = 7; 
+	bool AutoApproval = 8; 
+	bytes  Photos      = 9; 
+	int64 MinGuests   = 10; 
+	int64 MaxGuests   = 11; 
+	string IDHost      = 12; 
+}
+
+message CreateResponse {
+  string message = 1;
+}
