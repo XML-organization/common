@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "common/proto/booking";
+
+import "google/api/annotations.proto";
+
+service BookingService {
+  rpc CreateBooking (CreateBookingRequest) returns (CreateBookingResponse) {
+    option (google.api.http) = {
+		post: "/booking/create"
+        body: "*"
+	};
+  }
+
+  rpc GetAll (EmptyRequst) returns (BookingResponse) {
+    option (google.api.http) = {
+		get: "/booking/getAll"
+	};
+  }
+}
+
+message CreateBookingRequest {
+  string id = 1;
+  string accomodationID = 2;
+  string startDate = 3;
+  string endDate = 4;
+  string guestNumber = 5;
+  Status status = 6;
+}
+
+message EmptyRequst {
+  // Prazna poruka, bez polja
+}
+
+message CreateBookingResponse {
+  string message = 1;
+}
+
+message BookingResponse {
+  repeated CreateBookingRequest bookings = 1;
+}
+
+enum Status {
+  CONFIRMED = 0;
+  PENDING = 1;
+  DECLINED = 2;
+}
