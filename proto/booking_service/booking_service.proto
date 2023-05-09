@@ -13,6 +13,12 @@ service BookingService {
         body: "*"
 	};
   }
+
+  rpc GetAll (EmptyRequst) returns (BookingResponse) {
+    option (google.api.http) = {
+		get: "/booking/getAll"
+	};
+  }
 }
 
 message CreateBookingRequest {
@@ -24,8 +30,16 @@ message CreateBookingRequest {
   Status status = 6;
 }
 
+message EmptyRequst {
+  // Prazna poruka, bez polja
+}
+
 message CreateBookingResponse {
   string message = 1;
+}
+
+message BookingResponse {
+  repeated CreateBookingRequest bookings = 1;
 }
 
 enum Status {
