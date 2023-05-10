@@ -19,89 +19,89 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AccomodationService_Create_FullMethodName = "/accomodation.AccomodationService/Create"
+	AccommodationService_Create_FullMethodName = "/accomodation.AccommodationService/Create"
 )
 
-// AccomodationServiceClient is the client API for AccomodationService service.
+// AccommodationServiceClient is the client API for AccommodationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AccomodationServiceClient interface {
+type AccommodationServiceClient interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 }
 
-type accomodationServiceClient struct {
+type accommodationServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAccomodationServiceClient(cc grpc.ClientConnInterface) AccomodationServiceClient {
-	return &accomodationServiceClient{cc}
+func NewAccommodationServiceClient(cc grpc.ClientConnInterface) AccommodationServiceClient {
+	return &accommodationServiceClient{cc}
 }
 
-func (c *accomodationServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+func (c *accommodationServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
 	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, AccomodationService_Create_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, AccommodationService_Create_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AccomodationServiceServer is the server API for AccomodationService service.
-// All implementations must embed UnimplementedAccomodationServiceServer
+// AccommodationServiceServer is the server API for AccommodationService service.
+// All implementations must embed UnimplementedAccommodationServiceServer
 // for forward compatibility
-type AccomodationServiceServer interface {
+type AccommodationServiceServer interface {
 	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	mustEmbedUnimplementedAccomodationServiceServer()
+	mustEmbedUnimplementedAccommodationServiceServer()
 }
 
-// UnimplementedAccomodationServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedAccomodationServiceServer struct {
+// UnimplementedAccommodationServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedAccommodationServiceServer struct {
 }
 
-func (UnimplementedAccomodationServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+func (UnimplementedAccommodationServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedAccomodationServiceServer) mustEmbedUnimplementedAccomodationServiceServer() {}
+func (UnimplementedAccommodationServiceServer) mustEmbedUnimplementedAccommodationServiceServer() {}
 
-// UnsafeAccomodationServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AccomodationServiceServer will
+// UnsafeAccommodationServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AccommodationServiceServer will
 // result in compilation errors.
-type UnsafeAccomodationServiceServer interface {
-	mustEmbedUnimplementedAccomodationServiceServer()
+type UnsafeAccommodationServiceServer interface {
+	mustEmbedUnimplementedAccommodationServiceServer()
 }
 
-func RegisterAccomodationServiceServer(s grpc.ServiceRegistrar, srv AccomodationServiceServer) {
-	s.RegisterService(&AccomodationService_ServiceDesc, srv)
+func RegisterAccommodationServiceServer(s grpc.ServiceRegistrar, srv AccommodationServiceServer) {
+	s.RegisterService(&AccommodationService_ServiceDesc, srv)
 }
 
-func _AccomodationService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccommodationService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccomodationServiceServer).Create(ctx, in)
+		return srv.(AccommodationServiceServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccomodationService_Create_FullMethodName,
+		FullMethod: AccommodationService_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccomodationServiceServer).Create(ctx, req.(*CreateRequest))
+		return srv.(AccommodationServiceServer).Create(ctx, req.(*CreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AccomodationService_ServiceDesc is the grpc.ServiceDesc for AccomodationService service.
+// AccommodationService_ServiceDesc is the grpc.ServiceDesc for AccommodationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AccomodationService_ServiceDesc = grpc.ServiceDesc{
+var AccommodationService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "accomodation.AccommodationService",
-	HandlerType: (*AccomodationServiceServer)(nil),
+	HandlerType: (*AccommodationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Create",
-			Handler:    _AccomodationService_Create_Handler,
+			Handler:    _AccommodationService_Create_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

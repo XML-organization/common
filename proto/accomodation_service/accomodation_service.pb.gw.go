@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_AccomodationService_Create_0(ctx context.Context, marshaler runtime.Marshaler, client AccomodationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_AccommodationService_Create_0(ctx context.Context, marshaler runtime.Marshaler, client AccommodationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateRequest
 	var metadata runtime.ServerMetadata
 
@@ -48,7 +48,7 @@ func request_AccomodationService_Create_0(ctx context.Context, marshaler runtime
 
 }
 
-func local_request_AccomodationService_Create_0(ctx context.Context, marshaler runtime.Marshaler, server AccomodationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_AccommodationService_Create_0(ctx context.Context, marshaler runtime.Marshaler, server AccommodationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateRequest
 	var metadata runtime.ServerMetadata
 
@@ -65,13 +65,13 @@ func local_request_AccomodationService_Create_0(ctx context.Context, marshaler r
 
 }
 
-// RegisterAccomodationServiceHandlerServer registers the http handlers for service AccomodationService to "mux".
-// UnaryRPC     :call AccomodationServiceServer directly.
+// RegisterAccommodationServiceHandlerServer registers the http handlers for service AccommodationService to "mux".
+// UnaryRPC     :call AccommodationServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterAccomodationServiceHandlerFromEndpoint instead.
-func RegisterAccomodationServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server AccomodationServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterAccommodationServiceHandlerFromEndpoint instead.
+func RegisterAccommodationServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server AccommodationServiceServer) error {
 
-	mux.Handle("POST", pattern_AccomodationService_Create_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_AccommodationService_Create_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -79,12 +79,12 @@ func RegisterAccomodationServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/accomodation.AccomodationService/Create", runtime.WithHTTPPathPattern("/accomodation/create"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/accomodation.AccommodationService/Create", runtime.WithHTTPPathPattern("/accomodation/create"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_AccomodationService_Create_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_AccommodationService_Create_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -92,16 +92,16 @@ func RegisterAccomodationServiceHandlerServer(ctx context.Context, mux *runtime.
 			return
 		}
 
-		forward_AccomodationService_Create_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AccommodationService_Create_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterAccomodationServiceHandlerFromEndpoint is same as RegisterAccomodationServiceHandler but
+// RegisterAccommodationServiceHandlerFromEndpoint is same as RegisterAccommodationServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterAccomodationServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterAccommodationServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.DialContext(ctx, endpoint, opts...)
 	if err != nil {
 		return err
@@ -121,41 +121,41 @@ func RegisterAccomodationServiceHandlerFromEndpoint(ctx context.Context, mux *ru
 		}()
 	}()
 
-	return RegisterAccomodationServiceHandler(ctx, mux, conn)
+	return RegisterAccommodationServiceHandler(ctx, mux, conn)
 }
 
-// RegisterAccomodationServiceHandler registers the http handlers for service AccomodationService to "mux".
+// RegisterAccommodationServiceHandler registers the http handlers for service AccommodationService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterAccomodationServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterAccomodationServiceHandlerClient(ctx, mux, NewAccomodationServiceClient(conn))
+func RegisterAccommodationServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterAccommodationServiceHandlerClient(ctx, mux, NewAccommodationServiceClient(conn))
 }
 
-// RegisterAccomodationServiceHandlerClient registers the http handlers for service AccomodationService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "AccomodationServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "AccomodationServiceClient"
+// RegisterAccommodationServiceHandlerClient registers the http handlers for service AccommodationService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "AccommodationServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "AccommodationServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "AccomodationServiceClient" to call the correct interceptors.
-func RegisterAccomodationServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client AccomodationServiceClient) error {
+// "AccommodationServiceClient" to call the correct interceptors.
+func RegisterAccommodationServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client AccommodationServiceClient) error {
 
-	mux.Handle("POST", pattern_AccomodationService_Create_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_AccommodationService_Create_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/accomodation.AccomodationService/Create", runtime.WithHTTPPathPattern("/accomodation/create"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/accomodation.AccommodationService/Create", runtime.WithHTTPPathPattern("/accomodation/create"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_AccomodationService_Create_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_AccommodationService_Create_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_AccomodationService_Create_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AccommodationService_Create_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -163,9 +163,9 @@ func RegisterAccomodationServiceHandlerClient(ctx context.Context, mux *runtime.
 }
 
 var (
-	pattern_AccomodationService_Create_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"accomodation", "create"}, ""))
+	pattern_AccommodationService_Create_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"accomodation", "create"}, ""))
 )
 
 var (
-	forward_AccomodationService_Create_0 = runtime.ForwardResponseMessage
+	forward_AccommodationService_Create_0 = runtime.ForwardResponseMessage
 )
