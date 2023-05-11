@@ -34,6 +34,25 @@ service UserService {
       body: "*"
 		};
   }
+
+  rpc GetUserByEmail(GetUserByEmailRequest) returns (GetUserByEmailResponse){}
+}
+
+message GetUserByEmailRequest{
+  string email = 1;
+}
+
+message GetUserByEmailResponse{
+  string id = 1;
+  string email = 2;
+  string password = 3;
+  Role role = 4;
+  string name = 5;
+  string surname = 6;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;
 }
 
 message PrintRequest{
@@ -79,7 +98,7 @@ message UpdateUserResponse {
 }
 
 message ChangePasswordRequest {
-  string id = 1;
+  string email = 1;
   string new_password = 2;
   string old_password = 3;
 }
