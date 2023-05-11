@@ -33,7 +33,17 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  string message = 1;
+  string id = 1;
+  string email = 2;
+  Role role = 4;
+  string name = 5;
+  string surname = 6;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;
+  string accessToken = 11;
+  string message = 12;
 }
 
 message RegistrationRequest {
