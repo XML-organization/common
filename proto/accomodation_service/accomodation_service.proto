@@ -7,40 +7,93 @@ package accomodation;
 import "google/api/annotations.proto";
 
 service AccommodationService {
-
-rpc Create(CreateRequest) returns(CreateResponse) {
+  rpc Create(CreateRequest) returns(CreateResponse) {
     option (google.api.http) = {
       post: "/accomodation/create"
       body: "*"
     };
+  }
+
+  rpc UpdateAvailability(UpdateAvailabilityRequest) returns(UpdateAvailabilityResponse) {
+    option (google.api.http) = {
+      post: "/accomodation/updateAvailability"
+      body: "*"
+    };
+  }
+
+  rpc GetAllAccomodations(GetAllAccomodationsRequest) returns(GetAllAccomodationsResponse) {
+    option (google.api.http) = {
+      get: "/accomodation/{hostId}"
+    };
+  }
 }
 
+<<<<<<< HEAD
 rpc GetAutoApprovalForAccommodation(AutoApprovalRequest) returns (AutoApprovalResponse){}
 
 }
+=======
+>>>>>>> feature-common
 message CreateRequest {
-    string ID = 1;          
-	string Name      = 2;    
-	string Location   = 3; 
-	bool Wifi       = 4; 
-	bool Kitchen     = 5; 
-	bool AirCondition = 6; 
-	bool FreeParking  = 7; 
-	bool AutoApproval = 8; 
-	bytes  Photos      = 9; 
-	int64 MinGuests   = 10; 
-	int64 MaxGuests   = 11; 
-	string IDHost      = 12; 
+  string iD = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool airCondition = 6;
+  bool freeParking = 7;
+  bool autoApproval = 8;
+  bytes photos = 9;
+  string minGuests = 10;
+  string maxGuests = 11;
+  string iDHost = 12;
+  bool pricePerGuest = 13;
 }
 
 message CreateResponse {
   string message = 1;
 }
 
+<<<<<<< HEAD
 message AutoApprovalRequest {
   string accommodation_id = 1;
 }
 
 message AutoApprovalResponse {
   bool autoApproval = 1;
+=======
+message UpdateAvailabilityRequest {
+  string iD = 1;
+  string startDate = 2;
+  string endDate = 3;
+  string iDAccomodation = 4;
+}
+
+message UpdateAvailabilityResponse {
+  string message = 1;
+}
+
+message GetAllAccomodationsRequest {
+  string hostId = 1;
+}
+
+message Accomodation {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool airCondition = 6;
+  bool freeParking = 7;
+  bool autoApproval = 8;
+  bytes photos = 9;
+  string minGuests = 10;
+  string maxGuests = 11;
+  string idHost = 12;
+  bool pricePerGuest = 13;
+}
+
+message GetAllAccomodationsResponse {
+  repeated Accomodation accomodations = 1;
+>>>>>>> feature-common
 }
