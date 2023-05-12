@@ -24,7 +24,15 @@ service AutentificationService{
   
   rpc ChangePassword(ChangePasswordRequest) returns(ChangePasswordResponse) {}
   rpc ChangeEmail(ChangeEmailRequest) returns(ChangeEmailResponse) {}
+  rpc AuthorizeUser(AuthorizeUserRequest) returns(AuthorizeUserResponse) {}
+}
 
+message AuthorizeUserRequest{
+  int64 role = 1;
+}
+
+message AuthorizeUserResponse{
+  string message = 1;
 }
 
 message LoginRequest {

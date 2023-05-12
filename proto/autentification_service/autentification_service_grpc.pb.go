@@ -26,6 +26,7 @@ type AutentificationServiceClient interface {
 	Registration(ctx context.Context, in *RegistrationRequest, opts ...grpc.CallOption) (*RegistrationResponse, error)
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error)
 	ChangeEmail(ctx context.Context, in *ChangeEmailRequest, opts ...grpc.CallOption) (*ChangeEmailResponse, error)
+	AuthorizeUser(ctx context.Context, in *AuthorizeUserRequest, opts ...grpc.CallOption) (*AuthorizeUserResponse, error)
 }
 
 type autentificationServiceClient struct {
@@ -72,6 +73,15 @@ func (c *autentificationServiceClient) ChangeEmail(ctx context.Context, in *Chan
 	return out, nil
 }
 
+func (c *autentificationServiceClient) AuthorizeUser(ctx context.Context, in *AuthorizeUserRequest, opts ...grpc.CallOption) (*AuthorizeUserResponse, error) {
+	out := new(AuthorizeUserResponse)
+	err := c.cc.Invoke(ctx, "/autentification.AutentificationService/AuthorizeUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AutentificationServiceServer is the server API for AutentificationService service.
 // All implementations must embed UnimplementedAutentificationServiceServer
 // for forward compatibility
@@ -80,6 +90,7 @@ type AutentificationServiceServer interface {
 	Registration(context.Context, *RegistrationRequest) (*RegistrationResponse, error)
 	ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error)
 	ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error)
+	AuthorizeUser(context.Context, *AuthorizeUserRequest) (*AuthorizeUserResponse, error)
 	mustEmbedUnimplementedAutentificationServiceServer()
 }
 
@@ -98,6 +109,9 @@ func (UnimplementedAutentificationServiceServer) ChangePassword(context.Context,
 }
 func (UnimplementedAutentificationServiceServer) ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeEmail not implemented")
+}
+func (UnimplementedAutentificationServiceServer) AuthorizeUser(context.Context, *AuthorizeUserRequest) (*AuthorizeUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AuthorizeUser not implemented")
 }
 func (UnimplementedAutentificationServiceServer) mustEmbedUnimplementedAutentificationServiceServer() {
 }
@@ -185,6 +199,24 @@ func _AutentificationService_ChangeEmail_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AutentificationService_AuthorizeUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthorizeUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutentificationServiceServer).AuthorizeUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/autentification.AutentificationService/AuthorizeUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutentificationServiceServer).AuthorizeUser(ctx, req.(*AuthorizeUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AutentificationService_ServiceDesc is the grpc.ServiceDesc for AutentificationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -207,6 +239,10 @@ var AutentificationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeEmail",
 			Handler:    _AutentificationService_ChangeEmail_Handler,
+		},
+		{
+			MethodName: "AuthorizeUser",
+			Handler:    _AutentificationService_AuthorizeUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
