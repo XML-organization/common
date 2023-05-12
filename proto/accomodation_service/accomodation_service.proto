@@ -14,6 +14,9 @@ rpc Create(CreateRequest) returns(CreateResponse) {
       body: "*"
     };
 }
+
+rpc GetAutoApprovalForAccommodation(AutoApprovalRequest) returns (AutoApprovalResponse){}
+
 }
 message CreateRequest {
     string ID = 1;          
@@ -32,4 +35,12 @@ message CreateRequest {
 
 message CreateResponse {
   string message = 1;
+}
+
+message AutoApprovalRequest {
+  string accommodation_id = 1;
+}
+
+message AutoApprovalResponse {
+  bool autoApproval = 1;
 }
