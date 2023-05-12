@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AccommodationService_Create_FullMethodName             = "/accomodation.AccommodationService/Create"
-	AccommodationService_UpdateAvailability_FullMethodName = "/accomodation.AccommodationService/UpdateAvailability"
+	AccommodationService_Create_FullMethodName              = "/accomodation.AccommodationService/Create"
+	AccommodationService_UpdateAvailability_FullMethodName  = "/accomodation.AccommodationService/UpdateAvailability"
+	AccommodationService_GetAllAccomodations_FullMethodName = "/accomodation.AccommodationService/GetAllAccomodations"
 )
 
 // AccommodationServiceClient is the client API for AccommodationService service.
@@ -29,6 +30,7 @@ const (
 type AccommodationServiceClient interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 	UpdateAvailability(ctx context.Context, in *UpdateAvailabilityRequest, opts ...grpc.CallOption) (*UpdateAvailabilityResponse, error)
+	GetAllAccomodations(ctx context.Context, in *GetAllAccomodationsRequest, opts ...grpc.CallOption) (*GetAllAccomodationsResponse, error)
 }
 
 type accommodationServiceClient struct {
@@ -57,12 +59,22 @@ func (c *accommodationServiceClient) UpdateAvailability(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *accommodationServiceClient) GetAllAccomodations(ctx context.Context, in *GetAllAccomodationsRequest, opts ...grpc.CallOption) (*GetAllAccomodationsResponse, error) {
+	out := new(GetAllAccomodationsResponse)
+	err := c.cc.Invoke(ctx, AccommodationService_GetAllAccomodations_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccommodationServiceServer is the server API for AccommodationService service.
 // All implementations must embed UnimplementedAccommodationServiceServer
 // for forward compatibility
 type AccommodationServiceServer interface {
 	Create(context.Context, *CreateRequest) (*CreateResponse, error)
 	UpdateAvailability(context.Context, *UpdateAvailabilityRequest) (*UpdateAvailabilityResponse, error)
+	GetAllAccomodations(context.Context, *GetAllAccomodationsRequest) (*GetAllAccomodationsResponse, error)
 	mustEmbedUnimplementedAccommodationServiceServer()
 }
 
@@ -75,6 +87,9 @@ func (UnimplementedAccommodationServiceServer) Create(context.Context, *CreateRe
 }
 func (UnimplementedAccommodationServiceServer) UpdateAvailability(context.Context, *UpdateAvailabilityRequest) (*UpdateAvailabilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAvailability not implemented")
+}
+func (UnimplementedAccommodationServiceServer) GetAllAccomodations(context.Context, *GetAllAccomodationsRequest) (*GetAllAccomodationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllAccomodations not implemented")
 }
 func (UnimplementedAccommodationServiceServer) mustEmbedUnimplementedAccommodationServiceServer() {}
 
@@ -125,6 +140,24 @@ func _AccommodationService_UpdateAvailability_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AccommodationService_GetAllAccomodations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllAccomodationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccommodationServiceServer).GetAllAccomodations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccommodationService_GetAllAccomodations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccommodationServiceServer).GetAllAccomodations(ctx, req.(*GetAllAccomodationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AccommodationService_ServiceDesc is the grpc.ServiceDesc for AccommodationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +172,10 @@ var AccommodationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateAvailability",
 			Handler:    _AccommodationService_UpdateAvailability_Handler,
+		},
+		{
+			MethodName: "GetAllAccomodations",
+			Handler:    _AccommodationService_GetAllAccomodations_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
