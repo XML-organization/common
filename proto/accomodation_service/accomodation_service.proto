@@ -26,14 +26,10 @@ service AccommodationService {
       get: "/accomodation/{hostId}"
     };
   }
+
+  rpc GetAutoApprovalForAccommodation(AutoApprovalRequest) returns (AutoApprovalResponse){}
 }
 
-<<<<<<< HEAD
-rpc GetAutoApprovalForAccommodation(AutoApprovalRequest) returns (AutoApprovalResponse){}
-
-}
-=======
->>>>>>> feature-common
 message CreateRequest {
   string iD = 1;
   string name = 2;
@@ -54,14 +50,14 @@ message CreateResponse {
   string message = 1;
 }
 
-<<<<<<< HEAD
 message AutoApprovalRequest {
   string accommodation_id = 1;
 }
 
 message AutoApprovalResponse {
   bool autoApproval = 1;
-=======
+}
+
 message UpdateAvailabilityRequest {
   string iD = 1;
   string startDate = 2;
@@ -95,5 +91,4 @@ message Accomodation {
 
 message GetAllAccomodationsResponse {
   repeated Accomodation accomodations = 1;
->>>>>>> feature-common
 }

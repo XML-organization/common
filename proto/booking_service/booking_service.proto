@@ -19,6 +19,26 @@ service BookingService {
 		get: "/booking/getAll"
 	};
   }
+
+  rpc GetAllOnPending (EmptyRequst) returns (BookingResponse) {
+    option (google.api.http) = {
+		get: "/booking/getAllPending"
+	};
+  }
+
+  rpc Decline (CreateBookingRequest) returns (BookingResponse) {
+    option (google.api.http) = {
+		post: "/booking/decline"
+        body: "*"
+	};
+  }
+
+  rpc Confirm (CreateBookingRequest) returns (BookingResponse) {
+    option (google.api.http) = {
+		post: "/booking/confirm"
+        body: "*"
+	};
+  }
 }
 
 message CreateBookingRequest {
@@ -27,7 +47,7 @@ message CreateBookingRequest {
   string startDate = 3;
   string endDate = 4;
   string guestNumber = 5;
-  Status status = 6;
+  string status = 6;
 }
 
 message EmptyRequst {
@@ -40,10 +60,4 @@ message CreateBookingResponse {
 
 message BookingResponse {
   repeated CreateBookingRequest bookings = 1;
-}
-
-enum Status {
-  CONFIRMED = 0;
-  PENDING = 1;
-  DECLINED = 2;
 }

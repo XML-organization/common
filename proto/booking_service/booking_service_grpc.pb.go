@@ -19,8 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	BookingService_CreateBooking_FullMethodName = "/booking.BookingService/CreateBooking"
-	BookingService_GetAll_FullMethodName        = "/booking.BookingService/GetAll"
+	BookingService_CreateBooking_FullMethodName   = "/booking.BookingService/CreateBooking"
+	BookingService_GetAll_FullMethodName          = "/booking.BookingService/GetAll"
+	BookingService_GetAllOnPending_FullMethodName = "/booking.BookingService/GetAllOnPending"
+	BookingService_Decline_FullMethodName         = "/booking.BookingService/Decline"
+	BookingService_Confirm_FullMethodName         = "/booking.BookingService/Confirm"
 )
 
 // BookingServiceClient is the client API for BookingService service.
@@ -29,6 +32,9 @@ const (
 type BookingServiceClient interface {
 	CreateBooking(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error)
 	GetAll(ctx context.Context, in *EmptyRequst, opts ...grpc.CallOption) (*BookingResponse, error)
+	GetAllOnPending(ctx context.Context, in *EmptyRequst, opts ...grpc.CallOption) (*BookingResponse, error)
+	Decline(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error)
+	Confirm(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error)
 }
 
 type bookingServiceClient struct {
@@ -57,12 +63,42 @@ func (c *bookingServiceClient) GetAll(ctx context.Context, in *EmptyRequst, opts
 	return out, nil
 }
 
+func (c *bookingServiceClient) GetAllOnPending(ctx context.Context, in *EmptyRequst, opts ...grpc.CallOption) (*BookingResponse, error) {
+	out := new(BookingResponse)
+	err := c.cc.Invoke(ctx, BookingService_GetAllOnPending_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookingServiceClient) Decline(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error) {
+	out := new(BookingResponse)
+	err := c.cc.Invoke(ctx, BookingService_Decline_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bookingServiceClient) Confirm(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error) {
+	out := new(BookingResponse)
+	err := c.cc.Invoke(ctx, BookingService_Confirm_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BookingServiceServer is the server API for BookingService service.
 // All implementations must embed UnimplementedBookingServiceServer
 // for forward compatibility
 type BookingServiceServer interface {
 	CreateBooking(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error)
 	GetAll(context.Context, *EmptyRequst) (*BookingResponse, error)
+	GetAllOnPending(context.Context, *EmptyRequst) (*BookingResponse, error)
+	Decline(context.Context, *CreateBookingRequest) (*BookingResponse, error)
+	Confirm(context.Context, *CreateBookingRequest) (*BookingResponse, error)
 	mustEmbedUnimplementedBookingServiceServer()
 }
 
@@ -75,6 +111,15 @@ func (UnimplementedBookingServiceServer) CreateBooking(context.Context, *CreateB
 }
 func (UnimplementedBookingServiceServer) GetAll(context.Context, *EmptyRequst) (*BookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
+}
+func (UnimplementedBookingServiceServer) GetAllOnPending(context.Context, *EmptyRequst) (*BookingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllOnPending not implemented")
+}
+func (UnimplementedBookingServiceServer) Decline(context.Context, *CreateBookingRequest) (*BookingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Decline not implemented")
+}
+func (UnimplementedBookingServiceServer) Confirm(context.Context, *CreateBookingRequest) (*BookingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Confirm not implemented")
 }
 func (UnimplementedBookingServiceServer) mustEmbedUnimplementedBookingServiceServer() {}
 
@@ -125,6 +170,60 @@ func _BookingService_GetAll_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BookingService_GetAllOnPending_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequst)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookingServiceServer).GetAllOnPending(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookingService_GetAllOnPending_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookingServiceServer).GetAllOnPending(ctx, req.(*EmptyRequst))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookingService_Decline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBookingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookingServiceServer).Decline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookingService_Decline_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookingServiceServer).Decline(ctx, req.(*CreateBookingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BookingService_Confirm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBookingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookingServiceServer).Confirm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookingService_Confirm_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookingServiceServer).Confirm(ctx, req.(*CreateBookingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BookingService_ServiceDesc is the grpc.ServiceDesc for BookingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +238,18 @@ var BookingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAll",
 			Handler:    _BookingService_GetAll_Handler,
+		},
+		{
+			MethodName: "GetAllOnPending",
+			Handler:    _BookingService_GetAllOnPending_Handler,
+		},
+		{
+			MethodName: "Decline",
+			Handler:    _BookingService_Decline_Handler,
+		},
+		{
+			MethodName: "Confirm",
+			Handler:    _BookingService_Confirm_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
