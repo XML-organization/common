@@ -16,7 +16,7 @@ service AccommodationService {
 
   rpc UpdateAvailability(UpdateAvailabilityRequest) returns(UpdateAvailabilityResponse) {
     option (google.api.http) = {
-      post: "/accomodation/updateAvailability"
+      post: "/accomodation/addAvailability/{accomodationId}"
       body: "*"
     };
   }
@@ -26,6 +26,13 @@ service AccommodationService {
       get: "/accomodation/{hostId}"
     };
   }
+
+  rpc GetAllAvailability(GetAllAvailabilityRequest) returns(GetAllAvailabilityResponse) {
+    option (google.api.http) = {
+      get: "/accomodation/availability/{accomodationId}"
+    };
+  }
+
 }
 
 message CreateRequest {
@@ -52,7 +59,8 @@ message UpdateAvailabilityRequest {
   string iD = 1;
   string startDate = 2;
   string endDate = 3;
-  string iDAccomodation = 4;
+  string accomodationId = 4;
+  string price = 5;
 }
 
 message UpdateAvailabilityResponse {
@@ -81,4 +89,20 @@ message Accomodation {
 
 message GetAllAccomodationsResponse {
   repeated Accomodation accomodations = 1;
+}
+
+message GetAllAvailabilityRequest {
+  string accomodationId = 1;
+}
+
+message Availability {
+  string id = 1;
+  string startDate = 2;
+  string endDate = 3;
+  string idAccomodation = 4;
+  string price = 5;
+}
+
+message GetAllAvailabilityResponse {
+  repeated Availability availabilities = 1;
 }
