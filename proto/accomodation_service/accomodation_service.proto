@@ -27,6 +27,8 @@ service AccommodationService {
     };
   }
 
+  rpc GetAutoApprovalForAccommodation(AutoApprovalRequest) returns (AutoApprovalResponse){}
+
   rpc GetAllAvailability(GetAllAvailabilityRequest) returns(GetAllAvailabilityResponse) {
     option (google.api.http) = {
       get: "/accomodation/availability/{accomodationId}"
@@ -53,6 +55,14 @@ message CreateRequest {
 
 message CreateResponse {
   string message = 1;
+}
+
+message AutoApprovalRequest {
+  string accommodation_id = 1;
+}
+
+message AutoApprovalResponse {
+  bool autoApproval = 1;
 }
 
 message UpdateAvailabilityRequest {
