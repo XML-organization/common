@@ -84,8 +84,25 @@ func local_request_BookingService_GetAll_0(ctx context.Context, marshaler runtim
 }
 
 func request_BookingService_GetAllOnPending_0(ctx context.Context, marshaler runtime.Marshaler, client BookingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq EmptyRequst
+	var protoReq GetAllPendingRequest
 	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["hostId"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "hostId")
+	}
+
+	protoReq.HostId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "hostId", err)
+	}
 
 	msg, err := client.GetAllOnPending(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -93,8 +110,25 @@ func request_BookingService_GetAllOnPending_0(ctx context.Context, marshaler run
 }
 
 func local_request_BookingService_GetAllOnPending_0(ctx context.Context, marshaler runtime.Marshaler, server BookingServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq EmptyRequst
+	var protoReq GetAllPendingRequest
 	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["hostId"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "hostId")
+	}
+
+	protoReq.HostId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "hostId", err)
+	}
 
 	msg, err := server.GetAllOnPending(ctx, &protoReq)
 	return msg, metadata, err
@@ -233,7 +267,7 @@ func RegisterBookingServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/booking.BookingService/GetAllOnPending", runtime.WithHTTPPathPattern("/booking/getAllPending"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/booking.BookingService/GetAllOnPending", runtime.WithHTTPPathPattern("/booking/getAllPending/{hostId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -391,7 +425,7 @@ func RegisterBookingServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/booking.BookingService/GetAllOnPending", runtime.WithHTTPPathPattern("/booking/getAllPending"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/booking.BookingService/GetAllOnPending", runtime.WithHTTPPathPattern("/booking/getAllPending/{hostId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -459,7 +493,7 @@ var (
 
 	pattern_BookingService_GetAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"booking", "getAll"}, ""))
 
-	pattern_BookingService_GetAllOnPending_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"booking", "getAllPending"}, ""))
+	pattern_BookingService_GetAllOnPending_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"booking", "getAllPending", "hostId"}, ""))
 
 	pattern_BookingService_Decline_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"booking", "decline"}, ""))
 

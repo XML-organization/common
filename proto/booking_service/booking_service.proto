@@ -20,25 +20,29 @@ service BookingService {
 	};
   }
 
-  rpc GetAllOnPending (EmptyRequst) returns (BookingResponse) {
+  rpc GetAllOnPending (GetAllPendingRequest) returns (BookingResponse) {
     option (google.api.http) = {
-		get: "/booking/getAllPending"
+		get: "/booking/getAllPending/{hostId}"
 	};
   }
 
-  rpc Decline (CreateBookingRequest) returns (BookingResponse) {
+  rpc Decline (CreateBookingRequest) returns (CreateBookingResponse) {
     option (google.api.http) = {
 		post: "/booking/decline"
         body: "*"
 	};
   }
 
-  rpc Confirm (CreateBookingRequest) returns (BookingResponse) {
+  rpc Confirm (CreateBookingRequest) returns (CreateBookingResponse) {
     option (google.api.http) = {
 		post: "/booking/confirm"
         body: "*"
 	};
   }
+}
+
+message GetAllPendingRequest {
+  string hostId = 1;
 }
 
 message CreateBookingRequest {

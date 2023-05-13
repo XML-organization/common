@@ -32,9 +32,9 @@ const (
 type BookingServiceClient interface {
 	CreateBooking(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error)
 	GetAll(ctx context.Context, in *EmptyRequst, opts ...grpc.CallOption) (*BookingResponse, error)
-	GetAllOnPending(ctx context.Context, in *EmptyRequst, opts ...grpc.CallOption) (*BookingResponse, error)
-	Decline(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error)
-	Confirm(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error)
+	GetAllOnPending(ctx context.Context, in *GetAllPendingRequest, opts ...grpc.CallOption) (*BookingResponse, error)
+	Decline(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error)
+	Confirm(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error)
 }
 
 type bookingServiceClient struct {
@@ -63,7 +63,7 @@ func (c *bookingServiceClient) GetAll(ctx context.Context, in *EmptyRequst, opts
 	return out, nil
 }
 
-func (c *bookingServiceClient) GetAllOnPending(ctx context.Context, in *EmptyRequst, opts ...grpc.CallOption) (*BookingResponse, error) {
+func (c *bookingServiceClient) GetAllOnPending(ctx context.Context, in *GetAllPendingRequest, opts ...grpc.CallOption) (*BookingResponse, error) {
 	out := new(BookingResponse)
 	err := c.cc.Invoke(ctx, BookingService_GetAllOnPending_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -72,8 +72,8 @@ func (c *bookingServiceClient) GetAllOnPending(ctx context.Context, in *EmptyReq
 	return out, nil
 }
 
-func (c *bookingServiceClient) Decline(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error) {
-	out := new(BookingResponse)
+func (c *bookingServiceClient) Decline(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error) {
+	out := new(CreateBookingResponse)
 	err := c.cc.Invoke(ctx, BookingService_Decline_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -81,8 +81,8 @@ func (c *bookingServiceClient) Decline(ctx context.Context, in *CreateBookingReq
 	return out, nil
 }
 
-func (c *bookingServiceClient) Confirm(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*BookingResponse, error) {
-	out := new(BookingResponse)
+func (c *bookingServiceClient) Confirm(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error) {
+	out := new(CreateBookingResponse)
 	err := c.cc.Invoke(ctx, BookingService_Confirm_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -96,9 +96,9 @@ func (c *bookingServiceClient) Confirm(ctx context.Context, in *CreateBookingReq
 type BookingServiceServer interface {
 	CreateBooking(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error)
 	GetAll(context.Context, *EmptyRequst) (*BookingResponse, error)
-	GetAllOnPending(context.Context, *EmptyRequst) (*BookingResponse, error)
-	Decline(context.Context, *CreateBookingRequest) (*BookingResponse, error)
-	Confirm(context.Context, *CreateBookingRequest) (*BookingResponse, error)
+	GetAllOnPending(context.Context, *GetAllPendingRequest) (*BookingResponse, error)
+	Decline(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error)
+	Confirm(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error)
 	mustEmbedUnimplementedBookingServiceServer()
 }
 
@@ -112,13 +112,13 @@ func (UnimplementedBookingServiceServer) CreateBooking(context.Context, *CreateB
 func (UnimplementedBookingServiceServer) GetAll(context.Context, *EmptyRequst) (*BookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
 }
-func (UnimplementedBookingServiceServer) GetAllOnPending(context.Context, *EmptyRequst) (*BookingResponse, error) {
+func (UnimplementedBookingServiceServer) GetAllOnPending(context.Context, *GetAllPendingRequest) (*BookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllOnPending not implemented")
 }
-func (UnimplementedBookingServiceServer) Decline(context.Context, *CreateBookingRequest) (*BookingResponse, error) {
+func (UnimplementedBookingServiceServer) Decline(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Decline not implemented")
 }
-func (UnimplementedBookingServiceServer) Confirm(context.Context, *CreateBookingRequest) (*BookingResponse, error) {
+func (UnimplementedBookingServiceServer) Confirm(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Confirm not implemented")
 }
 func (UnimplementedBookingServiceServer) mustEmbedUnimplementedBookingServiceServer() {}
@@ -171,7 +171,7 @@ func _BookingService_GetAll_Handler(srv interface{}, ctx context.Context, dec fu
 }
 
 func _BookingService_GetAllOnPending_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EmptyRequst)
+	in := new(GetAllPendingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -183,7 +183,7 @@ func _BookingService_GetAllOnPending_Handler(srv interface{}, ctx context.Contex
 		FullMethod: BookingService_GetAllOnPending_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookingServiceServer).GetAllOnPending(ctx, req.(*EmptyRequst))
+		return srv.(BookingServiceServer).GetAllOnPending(ctx, req.(*GetAllPendingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
