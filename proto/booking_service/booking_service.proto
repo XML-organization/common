@@ -48,10 +48,11 @@ message GetAllPendingRequest {
 message CreateBookingRequest {
   string id = 1;
   string accomodationID = 2;
-  string startDate = 3;
-  string endDate = 4;
-  string guestNumber = 5;
-  string status = 6;
+  string userID = 3;
+  string startDate = 4;
+  string endDate = 5;
+  string guestNumber = 6;
+  string status = 7;
 }
 
 message EmptyRequst {
