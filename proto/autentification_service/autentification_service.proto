@@ -25,6 +25,7 @@ service AutentificationService{
   rpc ChangePassword(ChangePasswordRequest) returns(ChangePasswordResponse) {}
   rpc ChangeEmail(ChangeEmailRequest) returns(ChangeEmailResponse) {}
   rpc AuthorizeUser(AuthorizeUserRequest) returns(AuthorizeUserResponse) {}
+  rpc DeleteUser(DeleteUserRequest) returns(DeleteUserResponse) {}
 }
 
 message AuthorizeUserRequest{
@@ -92,4 +93,12 @@ enum Role {
   HOST = 0;
   GUEST = 1;
   NK = 2;
+}
+
+message DeleteUserRequest{
+  string id = 1;
+}
+
+message DeleteUserResponse{
+  string message = 1;
 }
