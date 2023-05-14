@@ -25,6 +25,7 @@ const (
 	BookingService_Decline_FullMethodName            = "/booking.BookingService/Decline"
 	BookingService_Confirm_FullMethodName            = "/booking.BookingService/Confirm"
 	BookingService_GetAllReservations_FullMethodName = "/booking.BookingService/GetAllReservations"
+	BookingService_CanceledBooking_FullMethodName    = "/booking.BookingService/CanceledBooking"
 )
 
 // BookingServiceClient is the client API for BookingService service.
@@ -37,6 +38,7 @@ type BookingServiceClient interface {
 	Decline(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error)
 	Confirm(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error)
 	GetAllReservations(ctx context.Context, in *ReservationRequest, opts ...grpc.CallOption) (*ReservationResponse, error)
+	CanceledBooking(ctx context.Context, in *CanceledBookingRequest, opts ...grpc.CallOption) (*CanceledBookingResponse, error)
 }
 
 type bookingServiceClient struct {
@@ -101,6 +103,15 @@ func (c *bookingServiceClient) GetAllReservations(ctx context.Context, in *Reser
 	return out, nil
 }
 
+func (c *bookingServiceClient) CanceledBooking(ctx context.Context, in *CanceledBookingRequest, opts ...grpc.CallOption) (*CanceledBookingResponse, error) {
+	out := new(CanceledBookingResponse)
+	err := c.cc.Invoke(ctx, BookingService_CanceledBooking_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BookingServiceServer is the server API for BookingService service.
 // All implementations must embed UnimplementedBookingServiceServer
 // for forward compatibility
@@ -111,6 +122,7 @@ type BookingServiceServer interface {
 	Decline(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error)
 	Confirm(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error)
 	GetAllReservations(context.Context, *ReservationRequest) (*ReservationResponse, error)
+	CanceledBooking(context.Context, *CanceledBookingRequest) (*CanceledBookingResponse, error)
 	mustEmbedUnimplementedBookingServiceServer()
 }
 
@@ -135,6 +147,9 @@ func (UnimplementedBookingServiceServer) Confirm(context.Context, *CreateBooking
 }
 func (UnimplementedBookingServiceServer) GetAllReservations(context.Context, *ReservationRequest) (*ReservationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllReservations not implemented")
+}
+func (UnimplementedBookingServiceServer) CanceledBooking(context.Context, *CanceledBookingRequest) (*CanceledBookingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CanceledBooking not implemented")
 }
 func (UnimplementedBookingServiceServer) mustEmbedUnimplementedBookingServiceServer() {}
 
@@ -257,6 +272,24 @@ func _BookingService_GetAllReservations_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BookingService_CanceledBooking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CanceledBookingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookingServiceServer).CanceledBooking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookingService_CanceledBooking_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookingServiceServer).CanceledBooking(ctx, req.(*CanceledBookingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BookingService_ServiceDesc is the grpc.ServiceDesc for BookingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -287,6 +320,10 @@ var BookingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllReservations",
 			Handler:    _BookingService_GetAllReservations_Handler,
+		},
+		{
+			MethodName: "CanceledBooking",
+			Handler:    _BookingService_CanceledBooking_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

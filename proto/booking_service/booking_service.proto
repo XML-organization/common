@@ -45,6 +45,13 @@ service BookingService {
     get: "/booking/reservation/{accomodationId}"
   };
   }
+
+    rpc CanceledBooking (CanceledBookingRequest) returns (CanceledBookingResponse) {
+    option (google.api.http) = {
+		put: "/booking/canceledBooking/{id}"
+        body: "*"
+	};
+  }
 }
 
 message GetAllPendingRequest {
@@ -78,4 +85,12 @@ message ReservationRequest {
 
 message ReservationResponse {
   repeated CreateBookingRequest reservations = 1;
+}
+
+message CanceledBookingRequest {
+  string id = 1;
+}
+
+message CanceledBookingResponse {
+  string message = 1;
 }
