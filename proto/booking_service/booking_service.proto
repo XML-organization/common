@@ -39,6 +39,12 @@ service BookingService {
         body: "*"
 	};
   }
+
+  rpc GetAllReservations(ReservationRequest) returns(ReservationResponse) {
+    option (google.api.http) = {
+    get: "/booking/reservation/{accomodationId}"
+  };
+  }
 }
 
 message GetAllPendingRequest {
@@ -65,4 +71,12 @@ message CreateBookingResponse {
 
 message BookingResponse {
   repeated CreateBookingRequest bookings = 1;
+}
+
+message ReservationRequest {
+  string accomodationId = 1;
+}
+
+message ReservationResponse {
+  repeated CreateBookingRequest reservations = 1;
 }
