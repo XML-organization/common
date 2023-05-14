@@ -21,6 +21,13 @@ service AccommodationService {
     };
   }
 
+  rpc Search(SearchRequest) returns(AccomodationSearchResponse) {
+    option (google.api.http) = {
+      post: "/accomodation/search"
+      body: "*"
+    };
+  }
+
   rpc GetAllAccomodations(GetAllAccomodationsRequest) returns(GetAllAccomodationsResponse) {
     option (google.api.http) = {
       get: "/accomodation/{hostId}"
@@ -51,6 +58,13 @@ message CreateRequest {
   string maxGuests = 11;
   string iDHost = 12;
   bool pricePerGuest = 13;
+}
+
+message SearchRequest{
+  string location = 1;
+  string startDate = 2;
+  string endDate = 3;
+  string numOfGuests = 4;
 }
 
 message CreateResponse {
@@ -115,4 +129,25 @@ message Availability {
 
 message GetAllAvailabilityResponse {
   repeated Availability availabilities = 1;
+}
+
+message AccomodationDTO {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool airCondition = 6;
+  bool freeParking = 7;
+  bool autoApproval = 8;
+  bytes photos = 9;
+  string minGuests = 10;
+  string maxGuests = 11;
+  string idHost = 12;
+  bool pricePerGuest = 13;
+  string totalPrice = 14;
+}
+
+message AccomodationSearchResponse{
+  repeated AccomodationDTO accommodationsDTO = 1;
 }
