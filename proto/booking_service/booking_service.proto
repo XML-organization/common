@@ -46,6 +46,12 @@ service BookingService {
   };
   }
 
+  rpc GetUserReservations(UserReservationRequest) returns(ReservationResponse) {
+    option (google.api.http) = {
+    get: "/booking/GetUserReservations/{userId}"
+  };
+  }
+
     rpc CanceledBooking (CanceledBookingRequest) returns (CanceledBookingResponse) {
     option (google.api.http) = {
 		put: "/booking/canceledBooking/{id}"
@@ -82,6 +88,9 @@ message BookingResponse {
 
 message ReservationRequest {
   string accomodationId = 1;
+}
+message UserReservationRequest {
+  string userId = 1;
 }
 
 message ReservationResponse {
