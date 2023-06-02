@@ -52,6 +52,19 @@ service BookingService {
       body: "*"
     };
   }
+
+  rpc GetUserReservations(UserReservationRequest) returns(ReservationResponse) {
+    option (google.api.http) = {
+    get: "/booking/GetUserReservations/{userId}"
+  };
+  }
+
+  rpc CanceledBooking (CanceledBookingRequest) returns (CanceledBookingResponse) {
+    option (google.api.http) = {
+		put: "/booking/canceledBooking/{id}"
+        body: "*"
+	};
+  }
 }
 
 message GuestHasReservationInPastRequest {
@@ -92,7 +105,18 @@ message BookingResponse {
 message ReservationRequest {
   string accomodationId = 1;
 }
+message UserReservationRequest {
+  string userId = 1;
+}
 
 message ReservationResponse {
   repeated CreateBookingRequest reservations = 1;
+}
+
+message CanceledBookingRequest {
+  string id = 1;
+}
+
+message CanceledBookingResponse {
+  string message = 1;
 }
