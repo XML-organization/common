@@ -45,6 +45,22 @@ service BookingService {
     get: "/booking/reservation/{accomodationId}"
   };
   }
+
+  rpc GuestHasReservationInPast(GuestHasReservationInPastRequest) returns (GuestHasReservationInPastResponse){
+    option (google.api.http) = {
+      post: "/booking/hasReservationInPast"
+      body: "*"
+    };
+  }
+}
+
+message GuestHasReservationInPastRequest {
+  repeated string accomodationsId = 1;
+  string guestId = 2;
+}
+
+message GuestHasReservationInPastResponse {
+  string message = 1;
 }
 
 message GetAllPendingRequest {

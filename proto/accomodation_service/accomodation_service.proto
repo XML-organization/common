@@ -42,6 +42,27 @@ service AccommodationService {
     };
   }
 
+  rpc GetOneAccomodation(GetOneAccomodationRequest) returns(GetOneAccomodationResponse){
+    option (google.api.http) = {
+      get: "/accomodation/getOne/{accomodationId}"
+    };
+  }
+
+  rpc GetAllAccomodationIdsByHostId(GetAllAccomodationIdsByHostIdRequest) returns(GetAllAccomodationIdsByHostIdResponse){
+    option (google.api.http) = {
+      post: "/accomodation/getAllAccomodationIdByHostId"
+      body: "*"
+    };
+  }
+
+}
+
+message GetAllAccomodationIdsByHostIdRequest {
+  string hostId = 1;
+}
+
+message GetAllAccomodationIdsByHostIdResponse {
+  repeated string accomodationIds = 1;
 }
 
 message CreateRequest {
@@ -117,6 +138,14 @@ message GetAllAccomodationsResponse {
 
 message GetAllAvailabilityRequest {
   string accomodationId = 1;
+}
+
+message GetOneAccomodationRequest {
+  string accomodationId = 1;
+}
+
+message GetOneAccomodationResponse {
+  Accomodation accomodation = 1;
 }
 
 message Availability {
