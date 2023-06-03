@@ -29,7 +29,7 @@ type AccommodationServiceClient interface {
 	GetAutoApprovalForAccommodation(ctx context.Context, in *AutoApprovalRequest, opts ...grpc.CallOption) (*AutoApprovalResponse, error)
 	GetAllAvailability(ctx context.Context, in *GetAllAvailabilityRequest, opts ...grpc.CallOption) (*GetAllAvailabilityResponse, error)
 	GetOneAccomodation(ctx context.Context, in *GetOneAccomodationRequest, opts ...grpc.CallOption) (*GetOneAccomodationResponse, error)
-	GetAllAccomodationIdsByHostId(ctx context.Context, in *GetAllAccomodationIdsByHostIdRequest, opts ...grpc.CallOption) (*GetAllAccomodationIdsByHostIdResponse, error)
+	CheckIfGuestHasReservationInPast(ctx context.Context, in *CheckIfGuestHasReservationInPastRequest, opts ...grpc.CallOption) (*CheckIfGuestHasReservationInPastResponse, error)
 }
 
 type accommodationServiceClient struct {
@@ -103,9 +103,9 @@ func (c *accommodationServiceClient) GetOneAccomodation(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *accommodationServiceClient) GetAllAccomodationIdsByHostId(ctx context.Context, in *GetAllAccomodationIdsByHostIdRequest, opts ...grpc.CallOption) (*GetAllAccomodationIdsByHostIdResponse, error) {
-	out := new(GetAllAccomodationIdsByHostIdResponse)
-	err := c.cc.Invoke(ctx, "/accomodation.AccommodationService/GetAllAccomodationIdsByHostId", in, out, opts...)
+func (c *accommodationServiceClient) CheckIfGuestHasReservationInPast(ctx context.Context, in *CheckIfGuestHasReservationInPastRequest, opts ...grpc.CallOption) (*CheckIfGuestHasReservationInPastResponse, error) {
+	out := new(CheckIfGuestHasReservationInPastResponse)
+	err := c.cc.Invoke(ctx, "/accomodation.AccommodationService/CheckIfGuestHasReservationInPast", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ type AccommodationServiceServer interface {
 	GetAutoApprovalForAccommodation(context.Context, *AutoApprovalRequest) (*AutoApprovalResponse, error)
 	GetAllAvailability(context.Context, *GetAllAvailabilityRequest) (*GetAllAvailabilityResponse, error)
 	GetOneAccomodation(context.Context, *GetOneAccomodationRequest) (*GetOneAccomodationResponse, error)
-	GetAllAccomodationIdsByHostId(context.Context, *GetAllAccomodationIdsByHostIdRequest) (*GetAllAccomodationIdsByHostIdResponse, error)
+	CheckIfGuestHasReservationInPast(context.Context, *CheckIfGuestHasReservationInPastRequest) (*CheckIfGuestHasReservationInPastResponse, error)
 	mustEmbedUnimplementedAccommodationServiceServer()
 }
 
@@ -152,8 +152,8 @@ func (UnimplementedAccommodationServiceServer) GetAllAvailability(context.Contex
 func (UnimplementedAccommodationServiceServer) GetOneAccomodation(context.Context, *GetOneAccomodationRequest) (*GetOneAccomodationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOneAccomodation not implemented")
 }
-func (UnimplementedAccommodationServiceServer) GetAllAccomodationIdsByHostId(context.Context, *GetAllAccomodationIdsByHostIdRequest) (*GetAllAccomodationIdsByHostIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllAccomodationIdsByHostId not implemented")
+func (UnimplementedAccommodationServiceServer) CheckIfGuestHasReservationInPast(context.Context, *CheckIfGuestHasReservationInPastRequest) (*CheckIfGuestHasReservationInPastResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckIfGuestHasReservationInPast not implemented")
 }
 func (UnimplementedAccommodationServiceServer) mustEmbedUnimplementedAccommodationServiceServer() {}
 
@@ -294,20 +294,20 @@ func _AccommodationService_GetOneAccomodation_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccommodationService_GetAllAccomodationIdsByHostId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllAccomodationIdsByHostIdRequest)
+func _AccommodationService_CheckIfGuestHasReservationInPast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckIfGuestHasReservationInPastRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccommodationServiceServer).GetAllAccomodationIdsByHostId(ctx, in)
+		return srv.(AccommodationServiceServer).CheckIfGuestHasReservationInPast(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/accomodation.AccommodationService/GetAllAccomodationIdsByHostId",
+		FullMethod: "/accomodation.AccommodationService/CheckIfGuestHasReservationInPast",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccommodationServiceServer).GetAllAccomodationIdsByHostId(ctx, req.(*GetAllAccomodationIdsByHostIdRequest))
+		return srv.(AccommodationServiceServer).CheckIfGuestHasReservationInPast(ctx, req.(*CheckIfGuestHasReservationInPastRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -348,8 +348,8 @@ var AccommodationService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AccommodationService_GetOneAccomodation_Handler,
 		},
 		{
-			MethodName: "GetAllAccomodationIdsByHostId",
-			Handler:    _AccommodationService_GetAllAccomodationIdsByHostId_Handler,
+			MethodName: "CheckIfGuestHasReservationInPast",
+			Handler:    _AccommodationService_CheckIfGuestHasReservationInPast_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

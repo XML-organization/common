@@ -48,21 +48,22 @@ service AccommodationService {
     };
   }
 
-  rpc GetAllAccomodationIdsByHostId(GetAllAccomodationIdsByHostIdRequest) returns(GetAllAccomodationIdsByHostIdResponse){
+  rpc CheckIfGuestHasReservationInPast(CheckIfGuestHasReservationInPastRequest) returns(CheckIfGuestHasReservationInPastResponse){
     option (google.api.http) = {
-      post: "/accomodation/getAllAccomodationIdByHostId"
+      post: "/accomodation/CheckIfGuestHasReservationInPast"
       body: "*"
     };
   }
 
 }
 
-message GetAllAccomodationIdsByHostIdRequest {
+message CheckIfGuestHasReservationInPastRequest {
   string hostId = 1;
+  string guestId = 2;
 }
 
-message GetAllAccomodationIdsByHostIdResponse {
-  repeated string accomodationIds = 1;
+message CheckIfGuestHasReservationInPastResponse {
+  bool hasReservation = 1;
 }
 
 message CreateRequest {
