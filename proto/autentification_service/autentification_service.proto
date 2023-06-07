@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+option go_package = "github.com/XML-organization/common/proto/autentification";
+
+package autentification;
+
+import "google/api/annotations.proto";
+
+service AutentificationService{
+        
+  rpc Login(LoginRequest) returns(LoginResponse) {
+    option (google.api.http) = {
+      post: "/autentification/login"
+      body: "*"
+    };
+  }
+
+  rpc Registration(RegistrationRequest) returns(RegistrationResponse) {
+    option (google.api.http) = {
+      post: "/autentification/registration"
+      body: "*"
+    };
+  }
+  
+  rpc ChangePassword(ChangePasswordRequest) returns(ChangePasswordResponse) {}
+  rpc ChangeEmail(ChangeEmailRequest) returns(ChangeEmailResponse) {}
+  rpc AuthorizeUser(AuthorizeUserRequest) returns(AuthorizeUserResponse) {}
+  rpc DeleteUser(DeleteUserRequest) returns(DeleteUserResponse) {}
+}
+
+message AuthorizeUserRequest{
+  int64 role = 1;
+}
+
+message AuthorizeUserResponse{
+  string message = 1;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string id = 1;
+  string email = 2;
+  Role role = 4;
+  string name = 5;
+  string surname = 6;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;
+  string accessToken = 11;
+  string message = 12;
+}
+
+message RegistrationRequest {
+  string email = 2;
+  string password = 3;
+  Role role = 4;
+  string name = 5;
+  string surname = 6;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;              
+}
+
+message RegistrationResponse {
+  string message = 1;
+}
+
+message ChangePasswordRequest {
+  string id = 1;
+  string NewPassword = 2;
+}
+
+message ChangePasswordResponse {
+  string messsage = 1;
+}
+
+message ChangeEmailRequest {
+  string id = 1;
+  string email = 2;
+}
+
+message ChangeEmailResponse {
+  string message = 1;
+}
+
+enum Role {
+  HOST = 0;
+  GUEST = 1;
+  NK = 2;
+}
+
+message DeleteUserRequest{
+  string id = 1;
+}
+
+message DeleteUserResponse{
+  string message = 1;
+}

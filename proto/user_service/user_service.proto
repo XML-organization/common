@@ -1,0 +1,231 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "common/proto/user";
+
+import "google/api/annotations.proto";
+
+service UserService {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+			post: "/user/create"
+      body: "*"
+		};
+  }
+
+  rpc Print (PrintRequest) returns (PrintResponse) {
+    option (google.api.http) = {
+			post: "/user/print"
+      body: "*"
+		};
+  }
+
+  rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+			put: "/user/update"
+      body: "*"
+		};
+  }
+  
+  rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse) {
+    option (google.api.http) = {
+			put: "/user/change"
+      body: "*"
+		};
+  }
+
+  rpc GetUserByEmail(GetUserByEmailRequest) returns (GetUserByEmailResponse){}
+
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteResponseMessage) {
+    option (google.api.http) = {
+			delete: "/user/deleteUser/{id}"
+		};
+  }
+
+  rpc CreateRating (CreateRatingRequest) returns (CreateRatingResponse){
+    option (google.api.http) = {
+			post: "/rating/create"
+      body: "*"
+		};
+  }
+
+  rpc WasGuestRatedHost (WasGuestRatedHostRequest) returns (WasGuestRatedHostResponse){
+    option (google.api.http) = {
+			post: "/rating/wasGuestRatedHost"
+      body: "*"
+		};
+  }
+
+  rpc DeleteRating (DeleteRatingRequest) returns (DeleteRatingResponse){
+    option (google.api.http) = {
+			put: "/rating/delete"
+      body: "*"
+		};
+  }
+
+  rpc UpdateRating (UpdateRatingRequest) returns (UpdateRatingResponse){
+    option (google.api.http) = {
+			put: "/rating/update"
+      body: "*"
+		};
+  }
+
+  rpc GetHostRatings(GetHostRatingsRequest) returns(GetHostRatingsResponse) {
+    option (google.api.http) = {
+    get: "/rating/getHostRatings/{userId}"
+  };
+  }
+}
+
+message GetHostRatingsRequest{
+  string userId = 1;
+}
+
+message GetHostRatingsResponse {
+  repeated Rating ratings = 1;
+}
+
+message Rating {
+  string id = 1;
+  int32 rating = 2;
+  string date = 3;
+  string raterId = 4;
+  string raterName = 5;
+  string raterSurname = 6;
+  string userId = 7;
+}
+
+message UpdateRatingRequest{
+  string hostId = 1;
+  string guestId = 2;
+  int64 rating = 3;
+}
+
+message UpdateRatingResponse{
+  string message = 1;
+}
+
+message DeleteRatingRequest{
+  string hostId = 1;
+  string guestId = 2;
+}
+
+message DeleteRatingResponse{
+  string message = 1;
+}
+
+message WasGuestRatedHostRequest{
+  string hostId = 1;
+  string guestId = 2;
+}
+
+message WasGuestRatedHostResponse{
+  bool wasRated = 1;
+}
+
+message CreateRatingRequest {
+  int64 rating = 1;
+  string date = 2;
+  string raterId = 3;
+  string raterName = 4;
+  string raterSurname = 5;
+  string userId = 6;
+}
+
+message CreateRatingResponse {
+  string message = 1;
+}
+
+message GetUserByEmailRequest{
+  string email = 1;
+}
+
+message GetUserByEmailResponse{
+  string id = 1;
+  string email = 2;
+  string password = 3;
+  Role role = 4;
+  string name = 5;
+  string surname = 6;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;
+}
+
+message DeleteResponseMessage{
+  string message = 1;
+}
+message PrintRequest{
+  string message = 1;
+}
+
+message PrintResponse{
+  string message = 1;
+}
+
+message CreateUserRequest {
+  string id = 1;
+  string email = 2;
+  string password = 3;
+  Role role = 4;
+  string name = 5;
+  string surname = 6;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;
+}
+
+message CreateUserResponse {
+  string message = 1;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  string email = 2;
+  string password = 3;
+  Role role = 4;
+  string name = 5;
+  string surname = 6;
+  string country = 7;
+  string city = 8;
+  string street = 9;
+  string number = 10;
+}
+
+message UpdateUserResponse {
+  string message = 1;
+}
+
+message ChangePasswordRequest {
+  string email = 1;
+  string new_password = 2;
+  string old_password = 3;
+}
+
+message ChangePasswordResponse {
+  string message = 1;
+}
+
+message DeleteUserRequest {
+  string id = 1;
+}
+
+message Address {
+  string id = 1;
+  string country = 2;
+  string city = 3;
+  string street = 4;
+  string number = 5;
+}
+
+enum Role {
+  HOST = 0;
+  GUEST = 1;
+  NK = 2;
+}
+
+
+

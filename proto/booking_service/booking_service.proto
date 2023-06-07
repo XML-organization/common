@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "common/proto/booking";
+
+import "google/api/annotations.proto";
+
+service BookingService {
+  rpc CreateBooking (CreateBookingRequest) returns (CreateBookingResponse) {
+    option (google.api.http) = {
+		post: "/booking/create"
+        body: "*"
+	};
+  }
+
+  rpc GetAll (EmptyRequst) returns (BookingResponse) {
+    option (google.api.http) = {
+		get: "/booking/getAll"
+	};
+  }
+
+  rpc GetAllOnPending (GetAllPendingRequest) returns (BookingResponse) {
+    option (google.api.http) = {
+		get: "/booking/getAllPending/{hostId}"
+	};
+  }
+
+  rpc Decline (CreateBookingRequest) returns (CreateBookingResponse) {
+    option (google.api.http) = {
+		post: "/booking/decline"
+        body: "*"
+	};
+  }
+
+  rpc Confirm (CreateBookingRequest) returns (CreateBookingResponse) {
+    option (google.api.http) = {
+		post: "/booking/confirm"
+        body: "*"
+	};
+  }
+
+  rpc GetAllReservations(ReservationRequest) returns(ReservationResponse) {
+    option (google.api.http) = {
+    get: "/booking/reservation/{accomodationId}"
+  };
+  }
+
+  rpc GuestHasReservationInPast(GuestHasReservationInPastRequest) returns (GuestHasReservationInPastResponse){
+    option (google.api.http) = {
+      post: "/booking/hasReservationInPast"
+      body: "*"
+    };
+  }
+
+  rpc GetUserReservations(UserReservationRequest) returns(ReservationResponse) {
+    option (google.api.http) = {
+    get: "/booking/GetUserReservations/{userId}"
+  };
+  }
+
+  rpc CanceledBooking (CanceledBookingRequest) returns (CanceledBookingResponse) {
+    option (google.api.http) = {
+		put: "/booking/canceledBooking/{id}"
+        body: "*"
+	};
+  }
+}
+
+message GuestHasReservationInPastRequest {
+  repeated string accomodationsId = 1;
+  string guestId = 2;
+}
+
+message GuestHasReservationInPastResponse {
+  string message = 1;
+}
+
+message GetAllPendingRequest {
+  string hostId = 1;
+}
+
+message CreateBookingRequest {
+  string id = 1;
+  string accomodationID = 2;
+  string userID = 3;
+  string startDate = 4;
+  string endDate = 5;
+  string guestNumber = 6;
+  string status = 7;
+}
+
+message EmptyRequst {
+  // Prazna poruka, bez polja
+}
+
+message CreateBookingResponse {
+  string message = 1;
+}
+
+message BookingResponse {
+  repeated CreateBookingRequest bookings = 1;
+}
+
+message ReservationRequest {
+  string accomodationId = 1;
+}
+message UserReservationRequest {
+  string userId = 1;
+}
+
+message ReservationResponse {
+  repeated CreateBookingRequest reservations = 1;
+}
+
+message CanceledBookingRequest {
+  string id = 1;
+}
+
+message CanceledBookingResponse {
+  string message = 1;
+}

@@ -1,0 +1,183 @@
+syntax = "proto3";
+
+option go_package = "github.com/XML-organization/common/proto/accomodation";
+
+package accomodation;
+
+import "google/api/annotations.proto";
+
+service AccommodationService {
+  rpc Create(CreateRequest) returns(CreateResponse) {
+    option (google.api.http) = {
+      post: "/accomodation/create"
+      body: "*"
+    };
+  }
+
+  rpc UpdateAvailability(UpdateAvailabilityRequest) returns(UpdateAvailabilityResponse) {
+    option (google.api.http) = {
+      post: "/accomodation/addAvailability/{accomodationId}"
+      body: "*"
+    };
+  }
+
+  rpc Search(SearchRequest) returns(AccomodationSearchResponse) {
+    option (google.api.http) = {
+      post: "/accomodation/search"
+      body: "*"
+    };
+  }
+
+  rpc GetAllAccomodations(GetAllAccomodationsRequest) returns(GetAllAccomodationsResponse) {
+    option (google.api.http) = {
+      get: "/accomodation/{hostId}"
+    };
+  }
+
+  rpc GetAutoApprovalForAccommodation(AutoApprovalRequest) returns (AutoApprovalResponse){}
+
+  rpc GetAllAvailability(GetAllAvailabilityRequest) returns(GetAllAvailabilityResponse) {
+    option (google.api.http) = {
+      get: "/accomodation/availability/{accomodationId}"
+    };
+  }
+
+  rpc GetOneAccomodation(GetOneAccomodationRequest) returns(GetOneAccomodationResponse){
+    option (google.api.http) = {
+      get: "/accomodation/getOne/{accomodationId}"
+    };
+  }
+
+  rpc CheckIfGuestHasReservationInPast(CheckIfGuestHasReservationInPastRequest) returns(CheckIfGuestHasReservationInPastResponse){
+    option (google.api.http) = {
+      post: "/accomodation/CheckIfGuestHasReservationInPast"
+      body: "*"
+    };
+  }
+
+}
+
+message CheckIfGuestHasReservationInPastRequest {
+  string hostId = 1;
+  string guestId = 2;
+}
+
+message CheckIfGuestHasReservationInPastResponse {
+  bool hasReservation = 1;
+}
+
+message CreateRequest {
+  string iD = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool airCondition = 6;
+  bool freeParking = 7;
+  bool autoApproval = 8;
+  bytes photos = 9;
+  string minGuests = 10;
+  string maxGuests = 11;
+  string iDHost = 12;
+  bool pricePerGuest = 13;
+}
+
+message SearchRequest{
+  string location = 1;
+  string startDate = 2;
+  string endDate = 3;
+  string numOfGuests = 4;
+}
+
+message CreateResponse {
+  string message = 1;
+}
+
+message AutoApprovalRequest {
+  string accommodation_id = 1;
+}
+
+message AutoApprovalResponse {
+  bool autoApproval = 1;
+}
+
+message UpdateAvailabilityRequest {
+  string iD = 1;
+  string startDate = 2;
+  string endDate = 3;
+  string accomodationId = 4;
+  string price = 5;
+}
+
+message UpdateAvailabilityResponse {
+  string message = 1;
+}
+
+message GetAllAccomodationsRequest {
+  string hostId = 1;
+}
+
+message Accomodation {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool airCondition = 6;
+  bool freeParking = 7;
+  bool autoApproval = 8;
+  bytes photos = 9;
+  string minGuests = 10;
+  string maxGuests = 11;
+  string idHost = 12;
+  bool pricePerGuest = 13;
+}
+
+message GetAllAccomodationsResponse {
+  repeated Accomodation accomodations = 1;
+}
+
+message GetAllAvailabilityRequest {
+  string accomodationId = 1;
+}
+
+message GetOneAccomodationRequest {
+  string accomodationId = 1;
+}
+
+message GetOneAccomodationResponse {
+  Accomodation accomodation = 1;
+}
+
+message Availability {
+  string id = 1;
+  string startDate = 2;
+  string endDate = 3;
+  string idAccomodation = 4;
+  string price = 5;
+}
+
+message GetAllAvailabilityResponse {
+  repeated Availability availabilities = 1;
+}
+
+message AccomodationDTO {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool airCondition = 6;
+  bool freeParking = 7;
+  bool autoApproval = 8;
+  bytes photos = 9;
+  string minGuests = 10;
+  string maxGuests = 11;
+  string idHost = 12;
+  bool pricePerGuest = 13;
+  string totalPrice = 14;
+}
+
+message AccomodationSearchResponse{
+  repeated AccomodationDTO accommodationsDTO = 1;
+}
