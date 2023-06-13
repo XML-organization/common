@@ -68,6 +68,21 @@ service AccommodationService {
     };
   }
 
+  rpc GetAccommodationRecommendations(GetAccommodationRecommendationsRequest) returns(GetAccommodationRecommendationsResponse){
+    option (google.api.http) = {
+      post: "/accomodation/getRecommendations"
+      body: "*"
+    };
+  }
+
+}
+
+message GetAccommodationRecommendationsRequest{
+  string userId = 1;
+}
+
+message GetAccommodationRecommendationsResponse{
+  repeated Accomodation accomodations = 1;
 }
 
 message CheckIfGuestHasReservationInPastRequest {
@@ -95,7 +110,7 @@ message CreateRequest {
   bool pricePerGuest = 13;
 }
 message GradeHostRequest {
-  string iD = 1;
+  string accomodationId = 6;
   string userId = 2;
   string userName = 3;
   string userSurname = 4;
