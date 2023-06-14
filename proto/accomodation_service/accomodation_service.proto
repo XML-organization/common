@@ -172,6 +172,23 @@ message Accomodation {
   bool pricePerGuest = 13;
 }
 
+message RecommendedAccomodation {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool airCondition = 6;
+  bool freeParking = 7;
+  bool autoApproval = 8;
+  bytes photos = 9;
+  string minGuests = 10;
+  string maxGuests = 11;
+  string idHost = 12;
+  bool pricePerGuest = 13;
+  string totalPrice = 14;
+}
+
 message GetAllAccomodationsResponse {
   repeated Accomodation accomodations = 1;
 }
