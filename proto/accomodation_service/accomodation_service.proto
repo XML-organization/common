@@ -75,6 +75,25 @@ service AccommodationService {
     };
   }
 
+  rpc GetGradesByAccomodationId(GradesByAccomodationIdRequest) returns(GradesByAccomodationIdResponse) {
+    option (google.api.http) = {
+      get: "/accomodation/gradesByAccomodation/{accomodationId}"
+    };
+  }
+
+   rpc EditGrade (EditGradeRequest) returns (EditGradeResponse) {
+    option (google.api.http) = {
+		put: "/accomodation/editGrade"
+        body: "*"
+	};
+  }
+
+  rpc DeleteGrade (DeleteGradeRequest) returns (DeleteGradeResponse) {
+    option (google.api.http) = {
+			delete: "/accomodation/deleteGrade/{id}"
+		};
+  }
+
 }
 
 message GetAccommodationRecommendationsRequest{
@@ -223,4 +242,36 @@ message EmptyRequst {
 
 message AccomodationSearchResponse{
   repeated AccomodationDTO accommodationsDTO = 1;
+}
+message GradesByAccomodationIdRequest {
+  string accomodationId = 1;
+}
+message GradeHost {
+  string id =1;
+  string accomodationId = 6;
+  string userId = 2;
+  string userName = 3;
+  string userSurname = 4;
+  string grade = 5;
+  string date = 7;
+}
+
+message GradesByAccomodationIdResponse{
+  repeated GradeHost GradesByAccomodationId = 1;
+}
+
+message EditGradeRequest {
+  string id = 1;
+  string newGrade = 2;
+}
+
+message EditGradeResponse {
+  string message = 1;
+}
+
+message DeleteGradeRequest{
+   string id = 1;
+}
+message DeleteGradeResponse {
+  string message = 1;
 }
