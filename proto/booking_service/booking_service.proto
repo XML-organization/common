@@ -71,8 +71,18 @@ service BookingService {
         body: "*"
 	};
   }
+
+  rpc IsExceptional(IsExceptionalRequest) returns(IsExceptionalResponse) {}
+
 }
 
+message IsExceptionalRequest{
+  string userId = 1;
+}
+
+message IsExceptionalResponse{
+  bool isExceptional = 1;
+}
 
 message GuestHasReservationInPastRequest {
   repeated string accomodationsId = 1;

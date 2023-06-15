@@ -29,6 +29,7 @@ const (
 	BookingService_GetUserReservations_FullMethodName       = "/booking.BookingService/GetUserReservations"
 	BookingService_GetFinishedReservations_FullMethodName   = "/booking.BookingService/GetFinishedReservations"
 	BookingService_CanceledBooking_FullMethodName           = "/booking.BookingService/CanceledBooking"
+	BookingService_IsExceptional_FullMethodName             = "/booking.BookingService/IsExceptional"
 )
 
 // BookingServiceClient is the client API for BookingService service.
@@ -45,6 +46,7 @@ type BookingServiceClient interface {
 	GetUserReservations(ctx context.Context, in *UserReservationRequest, opts ...grpc.CallOption) (*ReservationResponse, error)
 	GetFinishedReservations(ctx context.Context, in *UserReservationRequest, opts ...grpc.CallOption) (*ReservationResponse, error)
 	CanceledBooking(ctx context.Context, in *CanceledBookingRequest, opts ...grpc.CallOption) (*CanceledBookingResponse, error)
+	IsExceptional(ctx context.Context, in *IsExceptionalRequest, opts ...grpc.CallOption) (*IsExceptionalResponse, error)
 }
 
 type bookingServiceClient struct {
@@ -145,6 +147,15 @@ func (c *bookingServiceClient) CanceledBooking(ctx context.Context, in *Canceled
 	return out, nil
 }
 
+func (c *bookingServiceClient) IsExceptional(ctx context.Context, in *IsExceptionalRequest, opts ...grpc.CallOption) (*IsExceptionalResponse, error) {
+	out := new(IsExceptionalResponse)
+	err := c.cc.Invoke(ctx, BookingService_IsExceptional_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BookingServiceServer is the server API for BookingService service.
 // All implementations must embed UnimplementedBookingServiceServer
 // for forward compatibility
@@ -159,6 +170,7 @@ type BookingServiceServer interface {
 	GetUserReservations(context.Context, *UserReservationRequest) (*ReservationResponse, error)
 	GetFinishedReservations(context.Context, *UserReservationRequest) (*ReservationResponse, error)
 	CanceledBooking(context.Context, *CanceledBookingRequest) (*CanceledBookingResponse, error)
+	IsExceptional(context.Context, *IsExceptionalRequest) (*IsExceptionalResponse, error)
 	mustEmbedUnimplementedBookingServiceServer()
 }
 
@@ -195,6 +207,9 @@ func (UnimplementedBookingServiceServer) GetFinishedReservations(context.Context
 }
 func (UnimplementedBookingServiceServer) CanceledBooking(context.Context, *CanceledBookingRequest) (*CanceledBookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CanceledBooking not implemented")
+}
+func (UnimplementedBookingServiceServer) IsExceptional(context.Context, *IsExceptionalRequest) (*IsExceptionalResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsExceptional not implemented")
 }
 func (UnimplementedBookingServiceServer) mustEmbedUnimplementedBookingServiceServer() {}
 
@@ -389,6 +404,24 @@ func _BookingService_CanceledBooking_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BookingService_IsExceptional_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsExceptionalRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookingServiceServer).IsExceptional(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookingService_IsExceptional_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookingServiceServer).IsExceptional(ctx, req.(*IsExceptionalRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BookingService_ServiceDesc is the grpc.ServiceDesc for BookingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -435,6 +468,10 @@ var BookingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CanceledBooking",
 			Handler:    _BookingService_CanceledBooking_Handler,
+		},
+		{
+			MethodName: "IsExceptional",
+			Handler:    _BookingService_IsExceptional_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
