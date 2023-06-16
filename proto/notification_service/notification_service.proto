@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option go_package = "github.com/XML-organization/common/proto/notification";
+
+package notification;
+
+import "google/api/annotations.proto";
+
+service NotificationService{
+    rpc Save(SaveRequest) returns(SaveResponse) {
+        option (google.api.http) = {
+            post: "/notification/save"
+            body: "*"
+        };
+    }
+
+    rpc GetAllForUser(GetAllRequest) returns(GetAllResponse) {
+        option (google.api.http) = {
+            get: "/notification/{userID}"
+        };
+  }
+}
+
+message SaveRequest {
+  string id = 1;
+  string text = 2;
+  string notificationTime = 3;
+  string userID = 4;
+  string status = 5;
+}
+
+message SaveResponse {
+  string message = 1;
+}
+
+message GetAllRequest {
+  string userID = 1;
+}
+
+message GetAllResponse {
+  repeated SaveRequest notifications = 1;
+}
