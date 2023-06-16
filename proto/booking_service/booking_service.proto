@@ -59,12 +59,29 @@ service BookingService {
   };
   }
 
+  rpc GetFinishedReservations(UserReservationRequest) returns(ReservationResponse) {
+    option (google.api.http) = {
+    get: "/booking/getFinishedReservations/{userId}"
+  };
+  }
+
   rpc CanceledBooking (CanceledBookingRequest) returns (CanceledBookingResponse) {
     option (google.api.http) = {
 		put: "/booking/canceledBooking/{id}"
         body: "*"
 	};
   }
+
+  rpc IsExceptional(IsExceptionalRequest) returns(IsExceptionalResponse) {}
+
+}
+
+message IsExceptionalRequest{
+  string userId = 1;
+}
+
+message IsExceptionalResponse{
+  bool isExceptional = 1;
 }
 
 message GuestHasReservationInPastRequest {

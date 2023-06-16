@@ -76,6 +76,20 @@ service UserService {
     get: "/rating/getHostRatings/{userId}"
   };
   }
+
+  rpc IsExceptional(IsExceptionalRequest) returns(IsExceptionalResponse) {
+    option (google.api.http) = {
+    get: "/host/isExceptional/{userId}"
+  };
+  }
+}
+
+message IsExceptionalRequest{
+  string userId = 1;
+}
+
+message IsExceptionalResponse{
+  bool isExceptional = 1;
 }
 
 message GetHostRatingsRequest{

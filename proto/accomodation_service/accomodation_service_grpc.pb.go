@@ -26,10 +26,13 @@ type AccommodationServiceClient interface {
 	UpdateAvailability(ctx context.Context, in *UpdateAvailabilityRequest, opts ...grpc.CallOption) (*UpdateAvailabilityResponse, error)
 	Search(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*AccomodationSearchResponse, error)
 	GetAllAccomodations(ctx context.Context, in *GetAllAccomodationsRequest, opts ...grpc.CallOption) (*GetAllAccomodationsResponse, error)
+	GetAccomodations(ctx context.Context, in *EmptyRequst, opts ...grpc.CallOption) (*GetAllAccomodationsResponse, error)
 	GetAutoApprovalForAccommodation(ctx context.Context, in *AutoApprovalRequest, opts ...grpc.CallOption) (*AutoApprovalResponse, error)
 	GetAllAvailability(ctx context.Context, in *GetAllAvailabilityRequest, opts ...grpc.CallOption) (*GetAllAvailabilityResponse, error)
 	GetOneAccomodation(ctx context.Context, in *GetOneAccomodationRequest, opts ...grpc.CallOption) (*GetOneAccomodationResponse, error)
 	CheckIfGuestHasReservationInPast(ctx context.Context, in *CheckIfGuestHasReservationInPastRequest, opts ...grpc.CallOption) (*CheckIfGuestHasReservationInPastResponse, error)
+	GradeHost(ctx context.Context, in *GradeHostRequest, opts ...grpc.CallOption) (*GradeHostResponse, error)
+	GetAccommodationRecommendations(ctx context.Context, in *GetAccommodationRecommendationsRequest, opts ...grpc.CallOption) (*GetAccommodationRecommendationsResponse, error)
 }
 
 type accommodationServiceClient struct {
@@ -76,6 +79,15 @@ func (c *accommodationServiceClient) GetAllAccomodations(ctx context.Context, in
 	return out, nil
 }
 
+func (c *accommodationServiceClient) GetAccomodations(ctx context.Context, in *EmptyRequst, opts ...grpc.CallOption) (*GetAllAccomodationsResponse, error) {
+	out := new(GetAllAccomodationsResponse)
+	err := c.cc.Invoke(ctx, "/accomodation.AccommodationService/GetAccomodations", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *accommodationServiceClient) GetAutoApprovalForAccommodation(ctx context.Context, in *AutoApprovalRequest, opts ...grpc.CallOption) (*AutoApprovalResponse, error) {
 	out := new(AutoApprovalResponse)
 	err := c.cc.Invoke(ctx, "/accomodation.AccommodationService/GetAutoApprovalForAccommodation", in, out, opts...)
@@ -112,6 +124,24 @@ func (c *accommodationServiceClient) CheckIfGuestHasReservationInPast(ctx contex
 	return out, nil
 }
 
+func (c *accommodationServiceClient) GradeHost(ctx context.Context, in *GradeHostRequest, opts ...grpc.CallOption) (*GradeHostResponse, error) {
+	out := new(GradeHostResponse)
+	err := c.cc.Invoke(ctx, "/accomodation.AccommodationService/GradeHost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accommodationServiceClient) GetAccommodationRecommendations(ctx context.Context, in *GetAccommodationRecommendationsRequest, opts ...grpc.CallOption) (*GetAccommodationRecommendationsResponse, error) {
+	out := new(GetAccommodationRecommendationsResponse)
+	err := c.cc.Invoke(ctx, "/accomodation.AccommodationService/GetAccommodationRecommendations", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccommodationServiceServer is the server API for AccommodationService service.
 // All implementations must embed UnimplementedAccommodationServiceServer
 // for forward compatibility
@@ -120,10 +150,13 @@ type AccommodationServiceServer interface {
 	UpdateAvailability(context.Context, *UpdateAvailabilityRequest) (*UpdateAvailabilityResponse, error)
 	Search(context.Context, *SearchRequest) (*AccomodationSearchResponse, error)
 	GetAllAccomodations(context.Context, *GetAllAccomodationsRequest) (*GetAllAccomodationsResponse, error)
+	GetAccomodations(context.Context, *EmptyRequst) (*GetAllAccomodationsResponse, error)
 	GetAutoApprovalForAccommodation(context.Context, *AutoApprovalRequest) (*AutoApprovalResponse, error)
 	GetAllAvailability(context.Context, *GetAllAvailabilityRequest) (*GetAllAvailabilityResponse, error)
 	GetOneAccomodation(context.Context, *GetOneAccomodationRequest) (*GetOneAccomodationResponse, error)
 	CheckIfGuestHasReservationInPast(context.Context, *CheckIfGuestHasReservationInPastRequest) (*CheckIfGuestHasReservationInPastResponse, error)
+	GradeHost(context.Context, *GradeHostRequest) (*GradeHostResponse, error)
+	GetAccommodationRecommendations(context.Context, *GetAccommodationRecommendationsRequest) (*GetAccommodationRecommendationsResponse, error)
 	mustEmbedUnimplementedAccommodationServiceServer()
 }
 
@@ -143,6 +176,9 @@ func (UnimplementedAccommodationServiceServer) Search(context.Context, *SearchRe
 func (UnimplementedAccommodationServiceServer) GetAllAccomodations(context.Context, *GetAllAccomodationsRequest) (*GetAllAccomodationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllAccomodations not implemented")
 }
+func (UnimplementedAccommodationServiceServer) GetAccomodations(context.Context, *EmptyRequst) (*GetAllAccomodationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccomodations not implemented")
+}
 func (UnimplementedAccommodationServiceServer) GetAutoApprovalForAccommodation(context.Context, *AutoApprovalRequest) (*AutoApprovalResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAutoApprovalForAccommodation not implemented")
 }
@@ -154,6 +190,12 @@ func (UnimplementedAccommodationServiceServer) GetOneAccomodation(context.Contex
 }
 func (UnimplementedAccommodationServiceServer) CheckIfGuestHasReservationInPast(context.Context, *CheckIfGuestHasReservationInPastRequest) (*CheckIfGuestHasReservationInPastResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckIfGuestHasReservationInPast not implemented")
+}
+func (UnimplementedAccommodationServiceServer) GradeHost(context.Context, *GradeHostRequest) (*GradeHostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GradeHost not implemented")
+}
+func (UnimplementedAccommodationServiceServer) GetAccommodationRecommendations(context.Context, *GetAccommodationRecommendationsRequest) (*GetAccommodationRecommendationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccommodationRecommendations not implemented")
 }
 func (UnimplementedAccommodationServiceServer) mustEmbedUnimplementedAccommodationServiceServer() {}
 
@@ -240,6 +282,24 @@ func _AccommodationService_GetAllAccomodations_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AccommodationService_GetAccomodations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequst)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccommodationServiceServer).GetAccomodations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/accomodation.AccommodationService/GetAccomodations",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccommodationServiceServer).GetAccomodations(ctx, req.(*EmptyRequst))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AccommodationService_GetAutoApprovalForAccommodation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AutoApprovalRequest)
 	if err := dec(in); err != nil {
@@ -312,6 +372,42 @@ func _AccommodationService_CheckIfGuestHasReservationInPast_Handler(srv interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AccommodationService_GradeHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GradeHostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccommodationServiceServer).GradeHost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/accomodation.AccommodationService/GradeHost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccommodationServiceServer).GradeHost(ctx, req.(*GradeHostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccommodationService_GetAccommodationRecommendations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccommodationRecommendationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccommodationServiceServer).GetAccommodationRecommendations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/accomodation.AccommodationService/GetAccommodationRecommendations",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccommodationServiceServer).GetAccommodationRecommendations(ctx, req.(*GetAccommodationRecommendationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AccommodationService_ServiceDesc is the grpc.ServiceDesc for AccommodationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -336,6 +432,10 @@ var AccommodationService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AccommodationService_GetAllAccomodations_Handler,
 		},
 		{
+			MethodName: "GetAccomodations",
+			Handler:    _AccommodationService_GetAccomodations_Handler,
+		},
+		{
 			MethodName: "GetAutoApprovalForAccommodation",
 			Handler:    _AccommodationService_GetAutoApprovalForAccommodation_Handler,
 		},
@@ -350,6 +450,14 @@ var AccommodationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckIfGuestHasReservationInPast",
 			Handler:    _AccommodationService_CheckIfGuestHasReservationInPast_Handler,
+		},
+		{
+			MethodName: "GradeHost",
+			Handler:    _AccommodationService_GradeHost_Handler,
+		},
+		{
+			MethodName: "GetAccommodationRecommendations",
+			Handler:    _AccommodationService_GetAccommodationRecommendations_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

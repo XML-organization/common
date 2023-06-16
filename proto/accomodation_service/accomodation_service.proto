@@ -34,6 +34,12 @@ service AccommodationService {
     };
   }
 
+  rpc GetAccomodations(EmptyRequst) returns(GetAllAccomodationsResponse) {
+    option (google.api.http) = {
+      get: "/accomodation/allAccomodation"
+    };
+  }
+
   rpc GetAutoApprovalForAccommodation(AutoApprovalRequest) returns (AutoApprovalResponse){}
 
   rpc GetAllAvailability(GetAllAvailabilityRequest) returns(GetAllAvailabilityResponse) {
@@ -55,6 +61,28 @@ service AccommodationService {
     };
   }
 
+  rpc GradeHost(GradeHostRequest) returns(GradeHostResponse) {
+    option (google.api.http) = {
+      post: "/accomodation/gradeHost"
+      body: "*"
+    };
+  }
+
+  rpc GetAccommodationRecommendations(GetAccommodationRecommendationsRequest) returns(GetAccommodationRecommendationsResponse){
+    option (google.api.http) = {
+      post: "/accomodation/getRecommendations"
+      body: "*"
+    };
+  }
+
+}
+
+message GetAccommodationRecommendationsRequest{
+  string userId = 1;
+}
+
+message GetAccommodationRecommendationsResponse{
+  repeated Accomodation accomodations = 1;
 }
 
 message CheckIfGuestHasReservationInPastRequest {
@@ -81,6 +109,13 @@ message CreateRequest {
   string iDHost = 12;
   bool pricePerGuest = 13;
 }
+message GradeHostRequest {
+  string accomodationId = 6;
+  string userId = 2;
+  string userName = 3;
+  string userSurname = 4;
+  string grade = 5;
+}
 
 message SearchRequest{
   string location = 1;
@@ -90,6 +125,10 @@ message SearchRequest{
 }
 
 message CreateResponse {
+  string message = 1;
+}
+
+message GradeHostResponse {
   string message = 1;
 }
 
@@ -131,6 +170,23 @@ message Accomodation {
   string maxGuests = 11;
   string idHost = 12;
   bool pricePerGuest = 13;
+}
+
+message RecommendedAccomodation {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+  bool wifi = 4;
+  bool kitchen = 5;
+  bool airCondition = 6;
+  bool freeParking = 7;
+  bool autoApproval = 8;
+  bytes photos = 9;
+  string minGuests = 10;
+  string maxGuests = 11;
+  string idHost = 12;
+  bool pricePerGuest = 13;
+  string totalPrice = 14;
 }
 
 message GetAllAccomodationsResponse {
@@ -176,6 +232,10 @@ message AccomodationDTO {
   string idHost = 12;
   bool pricePerGuest = 13;
   string totalPrice = 14;
+}
+
+message EmptyRequst {
+  // Prazna poruka, bez polja
 }
 
 message AccomodationSearchResponse{
