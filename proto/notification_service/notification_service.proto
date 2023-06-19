@@ -1,24 +1,24 @@
 syntax = "proto3";
 
-option go_package = "github.com/XML-organization/common/proto/notification";
+option go_package = "common/proto/notification";
 
 package notification;
 
 import "google/api/annotations.proto";
 
 service NotificationService{
-    rpc Save(SaveRequest) returns(SaveResponse) {
-        option (google.api.http) = {
-            post: "/notification/save"
-            body: "*"
-        };
-    }
+  rpc SaveNotification(SaveRequest) returns(SaveResponse) {
+    option (google.api.http) = {
+        post: "/notification/save"
+        body: "*"
+    };
+  }
 
-    rpc GetAllForUser(GetAllRequest) returns(GetAllResponse) {
-        option (google.api.http) = {
-            get: "/notification/{userID}"
-        };
-    }
+  rpc GetAllNotificationsForUser(GetAllRequest) returns(GetAllResponse) {
+    option (google.api.http) = {
+      get: "/notification/{userID}"
+    };
+  }
 }
 
 message SaveRequest {

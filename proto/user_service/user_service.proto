@@ -82,6 +82,50 @@ service UserService {
     get: "/host/isExceptional/{userId}"
   };
   }
+
+  rpc SaveNotification(SaveRequest) returns(SaveResponse) {
+    option (google.api.http) = {
+        post: "/personal/message/save"
+        body: "*"
+    };
+  }
+
+  rpc UpdateNotificationStatus(UpdateNotificationRequest) returns(SaveResponse) {
+    option (google.api.http) = {
+        post: "/personal/message/update"
+        body: "*"
+    };
+  }
+
+  rpc GetAllNotificationsForUser(GetAllRequest) returns(GetAllResponse) {
+    option (google.api.http) = {
+      get: "/personal/message/get/{userID}"
+    };
+  }
+}
+
+message SaveRequest {
+  string id = 1;
+  string text = 2;
+  string notificationTime = 3;
+  string userID = 4;
+  string status = 5;
+}
+
+message SaveResponse {
+  string message = 1;
+}
+
+message GetAllRequest {
+  string userID = 1;
+}
+
+message UpdateNotificationRequest {
+  string notificationID =1;
+}
+
+message GetAllResponse {
+  repeated SaveRequest notifications = 1;
 }
 
 message IsExceptionalRequest{
