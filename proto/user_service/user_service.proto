@@ -77,6 +77,12 @@ service UserService {
   };
   }
 
+  rpc DeleteAllSettings(EmptyRequst) returns(SaveResponse) {
+    option (google.api.http) = {
+    get: "/personal/message/deleteAll"
+  };
+  }
+
   rpc IsExceptional(IsExceptionalRequest) returns(IsExceptionalResponse) {
     option (google.api.http) = {
     get: "/host/isExceptional/{userId}"
@@ -97,6 +103,13 @@ service UserService {
     };
   }
 
+  rpc UpdateNotificationSettings(UpdateSettingsRequest) returns(SaveResponse) {
+    option (google.api.http) = {
+        post: "/personal/settings/update"
+        body: "*"
+    };
+  }
+
   rpc GetAllNotificationsForUser(GetAllRequest) returns(GetAllResponse) {
     option (google.api.http) = {
       get: "/personal/message/get/{userID}"
@@ -110,6 +123,22 @@ message SaveRequest {
   string notificationTime = 3;
   string userID = 4;
   string status = 5;
+  string category =6;
+}
+
+message UpdateSettingsRequest{
+  string id = 1;
+  string userID = 2;
+  bool RequestCreated = 3;
+  bool ReservationCanceled = 4;
+	bool HostGraded = 5;         
+	bool AccommodationGraded = 6;
+	bool StatusChange = 7;    
+	bool ReservationReply = 8;
+}
+
+message EmptyRequst {
+  // Prazna poruka, bez polja
 }
 
 message SaveResponse {
