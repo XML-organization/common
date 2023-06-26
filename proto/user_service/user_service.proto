@@ -77,11 +77,84 @@ service UserService {
   };
   }
 
+  rpc DeleteAllSettings(EmptyRequst) returns(SaveResponse) {
+    option (google.api.http) = {
+    get: "/personal/message/deleteAll"
+  };
+  }
+
   rpc IsExceptional(IsExceptionalRequest) returns(IsExceptionalResponse) {
     option (google.api.http) = {
     get: "/host/isExceptional/{userId}"
   };
   }
+
+  rpc SaveNotification(SaveRequest) returns(SaveResponse) {
+    option (google.api.http) = {
+        post: "/personal/message/save"
+        body: "*"
+    };
+  }
+
+  rpc UpdateNotificationStatus(UpdateNotificationRequest) returns(SaveResponse) {
+    option (google.api.http) = {
+        post: "/personal/message/update"
+        body: "*"
+    };
+  }
+
+  rpc UpdateNotificationSettings(UpdateSettingsRequest) returns(SaveResponse) {
+    option (google.api.http) = {
+        post: "/personal/settings/update"
+        body: "*"
+    };
+  }
+
+  rpc GetAllNotificationsForUser(GetAllRequest) returns(GetAllResponse) {
+    option (google.api.http) = {
+      get: "/personal/message/get/{userID}"
+    };
+  }
+}
+
+message SaveRequest {
+  string id = 1;
+  string text = 2;
+  string notificationTime = 3;
+  string userID = 4;
+  string status = 5;
+  string category =6;
+}
+
+message UpdateSettingsRequest{
+  string id = 1;
+  string userID = 2;
+  bool RequestCreated = 3;
+  bool ReservationCanceled = 4;
+	bool HostGraded = 5;         
+	bool AccommodationGraded = 6;
+	bool StatusChange = 7;    
+	bool ReservationReply = 8;
+}
+
+message EmptyRequst {
+  // Prazna poruka, bez polja
+}
+
+message SaveResponse {
+  string message = 1;
+}
+
+message GetAllRequest {
+  string userID = 1;
+}
+
+message UpdateNotificationRequest {
+  string notificationID =1;
+}
+
+message GetAllResponse {
+  repeated SaveRequest notifications = 1;
 }
 
 message IsExceptionalRequest{
